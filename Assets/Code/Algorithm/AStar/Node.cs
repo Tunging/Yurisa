@@ -13,6 +13,13 @@ namespace Assets.Code.Algorithm.AStar
 
         public NodeType NodeType;
 
+        public int F => G + H;
+        public int G;
+        public int H;
+
+        //父节点
+        public Node parent;
+
         public Node(int x, int y )
         {
             this.x = x;
