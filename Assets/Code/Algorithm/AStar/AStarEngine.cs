@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Code.Algorithm.AStar
 {
-    public class AStarEngine
+    public class AStarEngine:BaseManager<AStarEngine>
     {
         int maxRow, maxCol = 100;
         Node[][] Nodes;
@@ -26,15 +26,10 @@ namespace Assets.Code.Algorithm.AStar
             }
         }
 
-        static AStarEngine instance;
-        public static AStarEngine Instance { get {
-                if (instance == null)
-                {
-                    instance = new AStarEngine();
-                }
-                return instance;
-            } }
+        public void FindPath(Node start, Node end)
+        {
 
+        }
 
     }
 }
