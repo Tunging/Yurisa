@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Assets.Code.Algorithm;
+using Assets.Code.Algorithm.AStar;
 
 public class NewBehaviourScript1 : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class NewBehaviourScript1 : MonoBehaviour
     {
         if (GUILayout.Button("fffff"))
         {
+            AStarEngine.Instance.FindPath(new Vector2Int(1, 2), new Vector2Int(78, 89));
         }
     }
 }

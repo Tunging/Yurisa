@@ -20,10 +20,11 @@ namespace Assets.Code.Algorithm.AStar
         //父节点
         public Node parent;
 
-        public Node(int x, int y )
+        public Node(int x, int y ,NodeType nodeType)
         {
             this.x = x;
             this.y = y;
+            NodeType = nodeType;
         }
     }
 

@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{9B17A3C2-EBD4-F5AD-5D42-174A7FB85C07}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -65,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Code\Algorithm\AStar\AStarEngine.cs" />
+    <Compile Include="Assets\Code\Algorithm\AStar\AStarManager.cs" />
     <Compile Include="Assets\Code\Algorithm\AStar\Node.cs" />
     <Compile Include="Assets\Code\BaseManager.cs" />
     <Compile Include="Assets\Code\NewBehaviourScript1.cs" />
@@ -678,8 +678,7 @@
       <HintPath>C:/Users/work/Documents/workspace/unity/Yurisa/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-  </ItemGroup>
+  <ItemGroup></ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

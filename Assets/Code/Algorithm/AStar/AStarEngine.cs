@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Code.Algorithm.AStar
 {
     public class AStarEngine:BaseManager<AStarEngine>
     {
-        int maxRow, maxCol = 100;
+        int maxRow = 100, maxCol = 100;
         Node[][] Nodes;
 
         List<Node> closeList = new List<Node>();
@@ -30,7 +33,22 @@ namespace Assets.Code.Algorithm.AStar
             }
         }
 
-        public void FindPath(Node start,Node end)
+        public void FindPath(Vector2Int start, Vector2Int end)
+        {
+            Node endNode = Nodes[end.x][end.y];
+            if (FindPath(Nodes[start.x][start.y], endNode))
+            {
+                Node node = endNode;
+
+                while (node.parent!=null)
+                {
+                    UnityEngine.Debug.Log(node);
+                    node = node.parent;
+                }
+            }
+        }
+
+        public bool FindPath(Node start,Node end)
         {
             closeList.Add(start);
 
@@ -59,18 +77,25 @@ namespace Assets.Code.Algorithm.AStar
 
             if (minFNode == null || minFNode == end)
             {
+                UnityEngine.Debug.Log("ddddd");
                 //end
-                return;
+                return true;
             }
             else
             {
+                minFNode.parent = start;
                 FindPath(minFNode, end);
             }
 
+            return false;
         }
 
         private int CalcNodeG(Node node,Node start)
         {
+            if (node == null || start == null)
+            {
+                return 0;
+            }
             int offsetx = node.x - start.x;
             int offsety = node.y - start.y;
             if (offsetx ==1 && offsety == 1)
@@ -105,7 +130,7 @@ namespace Assets.Code.Algorithm.AStar
 
         private void SelectNode(int x, int y , ref List<Node> nodes)
         {
-            if (ValidCoord(x, y))
+            if (ValidCoord(x, y)  && !openList.Contains(Nodes[x][y]) && !closeList.Contains(Nodes[x][y]))
             {
                 nodes.Add(Nodes[x][y]);
             }
