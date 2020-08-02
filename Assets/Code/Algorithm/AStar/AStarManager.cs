@@ -65,6 +65,21 @@ namespace Assets.Code.Algorithm.AStar
 
             openList.Sort(CompareNode);
 
+            Node next = openList[0];
+            openList.Remove(next);
+            closeList.Add(next);
+            while (next!=endNode)
+            {
+                FindPath(new Vector2(next.x, next.y), endPos);
+            }
+
+            List<Node> result = new List<Node>();
+            while (next.parent!=null)
+            {
+                result.Add(next.parent);
+            }
+
+            return result;
         }
 
         private int CompareNode(Node x, Node y)

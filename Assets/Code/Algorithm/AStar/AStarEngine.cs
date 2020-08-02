@@ -26,8 +26,7 @@ namespace Assets.Code.Algorithm.AStar
                 Nodes[i] = new Node[maxCol];
                 for (int col = 0; col < maxCol; col++)
                 {
-                    Node node = new Node(i, col);
-                    node.NodeType = NodeType.Normal;
+                    Node node = new Node(i, col, NodeType.Normal);
                     Nodes[i][col] = node;
                 }
             }
