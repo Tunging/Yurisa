@@ -12,23 +12,27 @@ namespace Assets.Code.Algorithm.AStar
         List<Node> openList = new List<Node>();
         List<Node> closeList = new List<Node>();
 
-        Node[,] Nodes;
+        public Node[,] Nodes;
 
-        int width = 100;
-        int height = 100;
+        int width = 5;
+        int height = 5;
 
-        public void InitMapInfo()
+        public void InitMapInfo(int width , int height)
         {
+            this.width = width;
+            this.height = height;
+
             Nodes = new Node[width, height];
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
                 {
-                    Node node = new Node(i, j, NodeType.Normal);
+                    Node node = new Node(i, j, UnityEngine.Random.Range(0,100)<20?NodeType.Wall:NodeType.Normal);
                     Nodes[i, j] = node;
                 }
             }
         }
+        Node startNode;
 
         public List<Node> FindPath(UnityEngine.Vector2 startPos, Vector2 endPos)
         {
@@ -40,7 +44,7 @@ namespace Assets.Code.Algorithm.AStar
                 return null;
             }
 
-            Node startNode = Nodes[(int)startPos.x, (int)startPos.y];
+            startNode = Nodes[(int)startPos.x, (int)startPos.y];
             Node endNode = Nodes[(int)endPos.x, (int)endPos.y];
             if (startNode == null || startNode.NodeType == NodeType.Wall
                 || endNode == null || endNode.NodeType == NodeType.Wall)
@@ -48,62 +52,104 @@ namespace Assets.Code.Algorithm.AStar
                 return null;
             }
 
+            closeList.Clear();
+            openList.Clear();
+
             startNode.parent = null;
             startNode.G = 0;
             startNode.H = 0;
+            closeList.Add(startNode);
 
-            int x = startNode.x;
-            int y = startNode.y;
-            AddNode(x,y+1,10, startNode, endNode);
-            AddNode(x+1,y+1,14, startNode, endNode);
-            AddNode(x-1,y+1,14, startNode, endNode);
-            AddNode(x,y-1,10, startNode, endNode);
-            AddNode(x+1,y-1,14, startNode, endNode);
-            AddNode(x-1,y-1,14, startNode, endNode);
-            AddNode(x+1,y,10, startNode, endNode);
-            AddNode(x-1,y,10, startNode, endNode);
-
-            openList.Sort(CompareNode);
-
-            Node next = openList[0];
-            openList.Remove(next);
-            closeList.Add(next);
-            while (next!=endNode)
+            while (true)
             {
-                FindPath(new Vector2(next.x, next.y), endPos);
-            }
+                int x = startNode.x;
+                int y = startNode.y;
+                AddNode(x, y + 1, 10, startNode, endNode);
+                AddNode(x + 1, y + 1, 14, startNode, endNode);
+                AddNode(x - 1, y + 1, 14, startNode, endNode);
+                AddNode(x, y - 1, 10, startNode, endNode);
+                AddNode(x + 1, y - 1, 14, startNode, endNode);
+                AddNode(x - 1, y - 1, 14, startNode, endNode);
+                AddNode(x + 1, y, 10, startNode, endNode);
 
-            List<Node> result = new List<Node>();
-            while (next.parent!=null)
-            {
-                result.Add(next.parent);
-            }
+                AddNode(x - 1, y, 10, startNode, endNode);
 
-            return result;
+                openList.Sort(CompareNode);
+
+                Node next = openList[0];
+                closeList.Add(next);
+                startNode = next;
+                openList.Remove(next);
+                if (startNode == endNode)
+                {
+                    List<Node> result = new List<Node>();
+                    result.Add(startNode);
+                    while (startNode.parent != null)
+                    {
+                        result.Add(startNode.parent);
+                        startNode = startNode.parent;
+                    }
+                    result.Reverse();
+                    return result;
+                }
+
+                if (openList.Count==0)
+                {
+                    return null;
+                }
+            }
         }
 
         private int CompareNode(Node x, Node y)
         {
+            if (x.parent == startNode)
+            {
+                if (y.parent != startNode)
+                {
+                    return -1;
+                }
+            }
+            else
+            {
+                if (y.parent == startNode)
+                {
+                    return 1;
+                }
+            }
+
             return x.F.CompareTo(y.F);
         }
 
-        public void AddNode(int x ,int y , int G,Node parentNode,Node endNode)
+        public void AddNode(int x, int y, int G, Node parentNode, Node endNode)
         {
-            Node node = Nodes[x, y];
-            if (node == null || node == endNode)
+            try
             {
-                return;
+                if (x<0 || x >= width || y <0 || y >= height)
+                {
+                    return;
+                }
+
+                Node node = Nodes[x, y];
+                if (node == null)
+                {
+                    return;
+                }
+
+                if (node.NodeType != NodeType.Normal || openList.Contains(node) || closeList.Contains(node))
+                {
+                    return;
+                }
+                node.parent = parentNode;
+
+                node.G = node.parent == null ? 0:node.parent.G + G;
+                node.H = Mathf.Abs(x - endNode.x) + Mathf.Abs(y - endNode.y);
+                openList.Add(node);
+            }
+            catch (Exception ex)
+            {
+                Debug.Log($"{ex.Message}    {x}   {y}");
             }
 
-            if (openList .Contains(node) || closeList.Contains(node))
-            {
-                return;
-            }
-            node.G = node.parent.G + G;
-            node.H = Mathf.Abs(x - endNode.x)+Mathf.Abs( y - endNode.y);
-            openList.Add(node);
-
-            node.parent = parentNode;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Code.Algorithm.AStar
 {
@@ -19,12 +20,18 @@ namespace Assets.Code.Algorithm.AStar
 
         //父节点
         public Node parent;
+        internal GameObject go;
 
         public Node(int x, int y ,NodeType nodeType)
         {
             this.x = x;
             this.y = y;
             NodeType = nodeType;
+        }
+
+        public override string ToString()
+        {
+            return $"x = {this.x}, y = {y}, F = {F}, NodeType = {NodeType} , parent = {parent}";
         }
     }
 

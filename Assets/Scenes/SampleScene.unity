@@ -147,9 +147,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 103543999}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b5f02c74f7dc604ca2324391841b938, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e8347878da54e54d98563016e3ec0bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefab: {fileID: 7826541284508328102, guid: 3a824b9bc070310458fdafa89e6a7ae3, type: 3}
+  red: {fileID: 2100000, guid: 4dfc60f7352a84949b2425f0fb7383ed, type: 2}
+  green: {fileID: 2100000, guid: 121b38a35f7767345b6bcb715fdfca63, type: 2}
+  white: {fileID: 2100000, guid: 7059941473d3bd14787097b6712efb40, type: 2}
+  yellow: {fileID: 2100000, guid: 0c5eb77808e50f546a6f7d7f707c31dc, type: 2}
+  width: 5
+  height: 5
+  offset: 2
 --- !u!4 &103544001
 Transform:
   m_ObjectHideFlags: 0
@@ -332,8 +340,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.70710665, y: -0, z: -0, w: 0.70710695}
+  m_LocalPosition: {x: 4.05, y: 9.84, z: 4.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
